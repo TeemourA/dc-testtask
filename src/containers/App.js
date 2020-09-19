@@ -9,11 +9,17 @@ class App extends Component {
     counterValue: 1,
     counterChangeStep: 1,
     minValue: 1,
-    maxValue: 1000,
+    maxValue: 100,
+
+    data: {
+      appTitle: 'Counter App',
+      info: 'Test task for DomClick',
+      author: 'https://github.com/TeemourA'
+    }
   }
 
   changeHandler = ({ target: { value } }) => {
-    if (Number(value) <= this.state.minValue) {
+    if (Number(value) <= this.state.minValue || !value.length) {
       this.setState({
         counterValue: this.state.minValue,
       });
@@ -29,14 +35,30 @@ class App extends Component {
   buttonClickHandler = ({ target: { id } }) => {
     if (id === 'minus') {
       this.setState((prevState) => {
-        return {
-          counterValue: Number(prevState.counterValue) - this.state.counterChangeStep,
+        const nextValue = Number(prevState.counterValue) - this.state.counterChangeStep;
+
+        if (nextValue <= this.state.minValue) {
+          return {
+            counterValue: this.state.minValue,
+          };
+        } else {
+          return {
+            counterValue: nextValue,
+          };
         }
       });
     } else {
       this.setState((prevState) => {
-        return {
-          counterValue: prevState.counterValue + this.state.counterChangeStep,
+        const nextValue = Number(prevState.counterValue) + this.state.counterChangeStep;
+
+        if (nextValue >= this.state.maxValue) {
+          return {
+            counterValue: this.state.maxValue,
+          };
+        } else {
+          return {
+            counterValue: nextValue,
+          };
         }
       });
     }
@@ -44,14 +66,26 @@ class App extends Component {
 
   render() {
     return (
-      <div className={classes.App} >
-        <Counter
-          min={this.state.minValue}
-          max={this.state.maxValue}
-          counter={this.state.counterValue}
-          changed={this.changeHandler}
-          clicked={this.buttonClickHandler}
-        />
+      <div className={classes.App}>
+        <h1 className={classes.App__title}>{this.state.data.appTitle}</h1>
+
+        <div className={classes.container}>
+          <button id="minus" className={`${classes.button} ${classes.button_substraction}`} onClick={this.buttonClickHandler}>-</button>
+
+          <Counter
+            min={this.state.minValue}
+            max={this.state.maxValue}
+            counter={this.state.counterValue}
+            changed={this.changeHandler}
+          />
+
+          <button id="plus" className={`${classes.button} ${classes.button_addition}`} onClick={this.buttonClickHandler}>+</button>
+        </div>
+
+        <p>
+          {this.state.data.info} by <a href={this.state.data.author} target="blank">Timur Ahmedov</a>
+        </p>
+
       </div>
     );
   }
