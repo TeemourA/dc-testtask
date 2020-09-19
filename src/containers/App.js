@@ -7,40 +7,49 @@ import Counter from '../components/Counter/Counter';
 class App extends Component {
   state = {
     counterValue: 1,
+    counterChangeStep: 1,
     minValue: 1,
-    maxValue: 100,
+    maxValue: 1000,
   }
 
-  inputChangeHandler = ({ target: { value } }) => {
-    if (value.length <= 2) {
-      console.log(typeof value, value);
-      const toNum = Number(value);
-      console.log(typeof toNum, toNum);
+  changeHandler = ({ target: { value } }) => {
+    if (Number(value) <= this.state.minValue) {
       this.setState({
-        counterValue: value,
+        counterValue: this.state.minValue,
+      });
+    } else if (Number(value) >= this.state.maxValue) {
+      this.setState({
+        counterValue: this.state.maxValue,
+      });
+    } else {
+      this.setState({ counterValue: Number(value) });
+    }
+  }
+
+  buttonClickHandler = ({ target: { id } }) => {
+    if (id === 'minus') {
+      this.setState((prevState) => {
+        return {
+          counterValue: Number(prevState.counterValue) - this.state.counterChangeStep,
+        }
+      });
+    } else {
+      this.setState((prevState) => {
+        return {
+          counterValue: prevState.counterValue + this.state.counterChangeStep,
+        }
       });
     }
   }
 
-  buttonClickHandler = (event) => {
-
-    // if (this.state.counterValue >= this.state.minValue && this.state.counterValue <= this.state.maxValue) {
-    this.setState((prevState) => {
-      return {
-        counterValue: Number(prevState.counterValue) + 1,
-      };
-    });
-    // }
-  }
-
   render() {
     return (
-      <div className={classes.App}>
+      <div className={classes.App} >
         <Counter
           min={this.state.minValue}
           max={this.state.maxValue}
           counter={this.state.counterValue}
-          changed={this.inputChangeHandler}
+          changed={this.changeHandler}
           clicked={this.buttonClickHandler}
         />
       </div>

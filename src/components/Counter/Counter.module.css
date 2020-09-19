@@ -1,0 +1,49 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.input {
+  width: 150px;
+  padding: 20px 10px;
+  font-size: 40px;
+  text-align: center;
+
+  border: 1px solid #c3c3c3;
+  border-radius: 20px;
+  box-shadow: 0 0 5px grey;
+  outline: none;
+
+  transition: all 0.2s linear;
+}
+
+.input:focus {
+  box-shadow: 0 0 12px black;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.button {
+  width: 80px;
+  height: 80px;
+
+  font-size: 50px;
+  font-weight: 300;
+  vertical-align: middle;
+
+  background-color: lightgreen;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+}
