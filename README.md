@@ -1,1 +1,1 @@
-Test task for DomClick
+Simple counter made with React
